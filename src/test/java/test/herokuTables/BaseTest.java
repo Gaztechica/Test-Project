@@ -20,7 +20,6 @@ public class BaseTest {
         options.addArguments("--disable-features=PasswordLeakDetection");
 
         Configuration.browserCapabilities = options;
-
     }
 
     @AfterEach
