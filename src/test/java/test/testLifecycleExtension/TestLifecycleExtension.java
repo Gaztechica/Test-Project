@@ -1,4 +1,4 @@
-package testLifecycleExtension;
+package test.testLifecycleExtension;
 
 import io.qameta.allure.Allure;
 import org.junit.jupiter.api.extension.AfterEachCallback;
@@ -16,7 +16,7 @@ public class TestLifecycleExtension implements BeforeEachCallback, AfterEachCall
 
     @Override
     public void beforeEach(ExtensionContext context) {
-        // Кртиерий 2: Генерация короткого traceId (или полного UUID) перед каждым тестом
+        // Генерация короткого traceId (или полного UUID) перед каждым тестом
         String traceId = UUID.randomUUID().toString().substring(0, 8);
         MDC.put(TRACE_ID_KEY, traceId);
     }
@@ -31,7 +31,7 @@ public class TestLifecycleExtension implements BeforeEachCallback, AfterEachCall
     public void testFailed(ExtensionContext context, Throwable cause) {
         String currentTraceId = MDC.get(TRACE_ID_KEY);
 
-        // Критерий 5: Снятие контекста и логов при падении и передача в Allure
+        // Снятие контекста и логов при падении и передача в Allure
         String attachmentText = String.format(
                 "Тест упал. Системный контекст падения:\n" +
                         "ID отслеживания (X-Trace-Id): %s\n" +

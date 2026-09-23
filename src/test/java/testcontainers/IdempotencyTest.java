@@ -59,7 +59,7 @@ public class IdempotencyTest extends BaseIntegrationTest {
 
             if (rs.next()) {
                 int count = rs.getInt(1);
-                // Главное утверждение теста — дублирования в БД не произошло
+                // дублирования в БД не произошло
                 assertEquals(1, count, "Данные задублировались! Защита от дублей не сработала.");
             }
         }

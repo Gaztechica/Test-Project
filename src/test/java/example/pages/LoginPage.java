@@ -1,4 +1,4 @@
-package test.herokuTables;
+package example.pages;
 
 import com.codeborne.selenide.CheckResult;
 import com.codeborne.selenide.Condition;
@@ -6,6 +6,8 @@ import com.codeborne.selenide.Driver;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
+import test.herokuTables.SecureAreaPage;
+
 import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -13,13 +15,11 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class LoginPage {
 
-    // 1. Локаторы элементов страницы
     private final SelenideElement usernameInput = $("#username");
     private final SelenideElement passwordInput = $("#password");
     private final SelenideElement submitButton = $("#login button[type='submit']");
     private final SelenideElement flashMessage = $("#flash");
 
-    // 2. Шаги (Steps) бизнес-логики
     @Step("Открыть страницу авторизации")
     public LoginPage openPage() {
         open("http://the-internet.herokuapp.com/login");
@@ -54,7 +54,6 @@ public class LoginPage {
         passwordInput.setValue(password);
         submitButton.click();
 
-        // передаем управление цепочкой методов новому классу страницы
         return new SecureAreaPage();
     }
 

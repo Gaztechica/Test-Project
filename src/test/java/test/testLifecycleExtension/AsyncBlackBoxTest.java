@@ -1,4 +1,4 @@
-package testLifecycleExtension;
+package test.testLifecycleExtension;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
@@ -74,7 +74,7 @@ public class AsyncBlackBoxTest extends BaseE2ETest {
         });
     }
 
-    // Критерий 4: Проброс X-Trace-Id в заголовки вызовов
+    //  Проброс X-Trace-Id в заголовки вызовов
     @Step("Отправка HTTP POST запроса на /trigger с X-Trace-Id = {traceId}")
     private void sendPostTriggerRequest(String requestId, String traceId) {
         RestAssured.given()

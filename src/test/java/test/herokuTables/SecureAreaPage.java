@@ -2,6 +2,7 @@ package test.herokuTables;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import example.pages.LoginPage;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.$;

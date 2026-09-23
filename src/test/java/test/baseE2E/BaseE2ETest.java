@@ -1,4 +1,4 @@
-package baseE2E;
+package test.baseE2E;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

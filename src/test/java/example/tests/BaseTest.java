@@ -1,4 +1,4 @@
-package test.herokuTables;
+package example.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;

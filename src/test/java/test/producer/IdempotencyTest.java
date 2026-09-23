@@ -1,4 +1,4 @@
-package producer;
+package test.producer;
 
 import org.junit.jupiter.api.*;
 import org.testcontainers.containers.GenericContainer;
