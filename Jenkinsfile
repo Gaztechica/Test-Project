@@ -5,7 +5,7 @@ pipeline {
 }
 
   environment {
-        APP_ENV = 'staging'
+        ENV = 'staging'
         MAVEN_OPTS = '-Dmaven.repo.local=.m2/repository'
     }
 
@@ -33,7 +33,8 @@ pipeline {
 
         stage('UI Tests') {
             steps {
-                sh 'mvn test -Pui || true'
+//                 sh 'mvn test -Pui || true'
+                sh 'mvn test -Pui -Dselenide.headless=true || true'
             }
         }
 

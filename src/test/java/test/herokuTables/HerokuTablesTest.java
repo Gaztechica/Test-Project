@@ -1,16 +1,14 @@
 package test.herokuTables;
 
-import example.tests.BaseTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.openqa.selenium.WebDriver;
 
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HerokuTablesTest extends BaseTest {
 
-    private WebDriver driver;
+
 
     @ParameterizedTest(name = "Проверка локатора: {0}")
     @ValueSource(strings = {
