@@ -1,7 +1,10 @@
 pipeline {
-    agent any
+   agent any
+   tools {
+    maven 'maven-3.9'
+}
 
-    environment {
+  environment {
         APP_ENV = 'staging'
         MAVEN_OPTS = '-Dmaven.repo.local=.m2/repository'
     }
