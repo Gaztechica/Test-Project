@@ -32,9 +32,10 @@ pipeline {
         }
 
         stage('UI Tests') {
-//         agent {
-//                 docker { image 'markhobson/maven-chrome:jdk-21' }
-//             }
+        agent {
+                docker { image 'markhobson/maven-chrome:jdk-21' }
+                args '-v /var/run/docker.sock:/var/run/docker.sock'
+            }
             steps {
 //                 sh 'mvn test -Pui || true'
                 sh 'mvn test -Pui -Dselenide.headless=true || true'
