@@ -154,7 +154,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Драйвер PostgreSQL (нужен, чтобы Java могла делать запросы в БД) -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>

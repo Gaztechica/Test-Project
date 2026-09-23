@@ -1,0 +1,7 @@
+{
+  "$schema": "http://json-schema.org",
+  "type": "object",
+  "additionalProperties": {
+    "type": "string"
+  }
+}

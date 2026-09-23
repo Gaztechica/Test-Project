@@ -1,5 +1,7 @@
-package test.herokuTables;
+package example.tests.ui;
 
+import example.pages.LoginPage;
+import example.tests.BaseTest;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -40,10 +42,10 @@ public class LoginParametrizedTest extends BaseTest {
     public void testSuccessfulLoginShowsSecureArea() {
         //  высокоуровневая цепочка шагов (Fluent API)
         loginPage.openPage()
-                .loginWithValidData("tomsmith", "SuperSecretPassword!") // Переключились на SecureAreaPage
+                .loginWithValidData("tomsmith", "SuperSecretPassword!")
                 .verifySuccessMessage("You logged into a secure area!")
                 .verifyHeader("Secure Area")
-                .clickLogout()                                         // Вернулись на LoginPage
-                .verifyErrorMessage("You logged out of the secure area!"); // Проверяем плашку разлогина
+                .clickLogout()
+                .verifyErrorMessage("You logged out of the secure area!");
     }
 }

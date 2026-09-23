@@ -1,4 +1,4 @@
-package baseE2E;
+package test.baseE2E;
 
 import io.restassured.RestAssured;
 import org.awaitility.Awaitility;

@@ -1,4 +1,4 @@
-package testLifecycleExtension;
+package test.testLifecycleExtension;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

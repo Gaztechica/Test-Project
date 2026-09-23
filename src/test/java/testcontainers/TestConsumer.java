@@ -41,7 +41,7 @@ public class TestConsumer {
         ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(2000));
 
         String sql = "INSERT INTO processed_orders (order_id, status) VALUES (?, ?) " +
-                "ON CONFLICT (order_id) DO NOTHING"; // 🌟 Идемпотентная вставка
+                "ON CONFLICT (order_id) DO NOTHING"; // Идемпотентная вставка
 
         try (Connection conn = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
