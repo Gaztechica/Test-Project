@@ -1,0 +1,68 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: test_postgres
+    environment:
+      POSTGRES_DB: test_db
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U test_user -d test_db" ]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 2s
+
+  kafka:
+    image: dockerhub.timeweb.cloud/redpandadata/redpanda:v23.3.5
+    container_name: test_redpanda
+    command:
+      - redpanda
+      - start
+      - --smp=1
+      - --memory=256M
+      - --reserve-memory=0M
+      - --overprovisioned
+      - --node-id=0
+      - --kafka-addr=internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr=internal://kafka:9092,external://localhost:19092
+    ports:
+      - "19092:19092"
+      - "9092:9092"
+    healthcheck:
+      test: [ "CMD", "rpk", "cluster", "info" ]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+  akhq:
+    image: tchiotludo/akhq:0.25.1
+    container_name: test_akhq
+    environment:
+      AKHQ_CONFIGURATION: |
+        akhq:
+          connections:
+            docker-kafka:
+              properties:
+                 bootstrap.servers: "kafka:9092"
+    ports:
+      - "8089:8080"
+    depends_on:
+      kafka:
+        condition: service_healthy
+
+  autotests:
+    build: .
+    container_name: java_autotests
+    environment:
+      - DOCKER_ENV=true
+    volumes:
+      - ./target:/app/target
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
