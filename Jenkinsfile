@@ -70,6 +70,9 @@ pipeline {
                         if (currentBuild.result == 'FAILURE' && currentBuild.currentResult == 'FAILURE') {
                             echo "Пайплайн завершился с техническими ошибками, но тесты собраны."
                         }
+                        }
+                        }
+                        }
 //             allure includeProperties: false,
 //                    jdk: '',
 //                    properties: [],
