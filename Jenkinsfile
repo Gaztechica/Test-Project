@@ -59,11 +59,22 @@ pipeline {
 
     post {
         always {
-            allure includeProperties: false,
-                   jdk: '',
-                   properties: [],
-                   reportBuildPolicy: 'ALWAYS',
-                   results: [[path: 'target/allure-results']]
+        allure includeProperties: false,
+                           jdk: '',
+                           properties: [],
+                           reportBuildPolicy: 'ALWAYS',
+                           results: [[path: 'target/allure-results']],
+                           markUnstable: false
+
+                    script {
+                        if (currentBuild.result == 'FAILURE' && currentBuild.currentResult == 'FAILURE') {
+                            echo "Пайплайн завершился с техническими ошибками, но тесты собраны."
+                        }
+//             allure includeProperties: false,
+//                    jdk: '',
+//                    properties: [],
+//                    reportBuildPolicy: 'ALWAYS',
+//                    results: [[path: 'target/allure-results']]
 
             script {
                             if (currentBuild.result == 'FAILURE' || currentBuild.currentResult == 'FAILURE') {
