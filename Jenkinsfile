@@ -51,7 +51,7 @@ pipeline {
             }
             post {
                 always {
-                    sh 'docker-compose down'
+                    sh 'docker-compose down || true'
                 }
             }
         }
@@ -73,13 +73,13 @@ pipeline {
         }
     }
 
-            script {
-                            if (currentBuild.result == 'FAILURE' || currentBuild.currentResult == 'FAILURE') {
-                                echo "❌ Pipeline status: FAILURE"
-                            } else {
-                                echo "✅ Pipeline status: SUCCESS / ALL TESTS PASSED"
-                            }
-            }
-        }
+//             script {
+//                             if (currentBuild.result == 'FAILURE' || currentBuild.currentResult == 'FAILURE') {
+//                                 echo "❌ Pipeline status: FAILURE"
+//                             } else {
+//                                 echo "✅ Pipeline status: SUCCESS / ALL TESTS PASSED"
+//                             }
+//             }
+//         }
 
 }
