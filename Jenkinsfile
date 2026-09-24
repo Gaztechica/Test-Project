@@ -51,35 +51,27 @@ pipeline {
             }
             post {
                 always {
-                    sh 'docker-compose down || true'
+                    sh 'docker-compose down'
                 }
             }
         }
     }
 
-     post {
-            always {
-                allure includeProperties: false,
-                       jdk: '',
-                       properties: [],
-                       reportBuildPolicy: 'ALWAYS',
-                       results: [[path: 'target/allure-results']],
-                       markUnstable: false
+    post {
+        always {
+            allure includeProperties: false,
+                   jdk: '',
+                   properties: [],
+                   reportBuildPolicy: 'ALWAYS',
+                   results: [[path: 'target/allure-results']]
 
-                script {
-                    echo "Сборка полностью завершена. Результаты прогона агрегированы Allure."
-                }
+            script {
+                            if (currentBuild.result == 'FAILURE' || currentBuild.currentResult == 'FAILURE') {
+                                echo "❌ Pipeline status: FAILURE"
+                            } else {
+                                echo "✅ Pipeline status: SUCCESS / ALL TESTS PASSED"
+                            }
             }
         }
     }
-
-//             script {
-//                             if (currentBuild.result == 'FAILURE' || currentBuild.currentResult == 'FAILURE') {
-//                                 echo "❌ Pipeline status: FAILURE"
-//                             } else {
-//                                 echo "✅ Pipeline status: SUCCESS / ALL TESTS PASSED"
-//                             }
-//             }
-//         }
-
-// }
+}
