@@ -173,7 +173,6 @@
             <version>1.5.3</version>
         </dependency>
 
-
         <!--        &lt;!&ndash; Testcontainers Core & Modules &ndash;&gt;-->
         <!--        <dependency>-->
         <!--            <groupId>org.testcontainers.BaseIntegrationTest</groupId>-->
