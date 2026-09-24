@@ -66,11 +66,11 @@ pipeline {
                    results: [[path: 'target/allure-results']]
 
             script {
-                if (currentBuild.result == 'FAILURE' || currentBuild.currentResult == 'FAILURE') {
-                    slackSend color: 'danger', message: "❌ Pipeline failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
-                } else {
-                    slackSend color: 'good', message: "✅ All tests passed: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
-                }
+                            if (currentBuild.result == 'FAILURE' || currentBuild.currentResult == 'FAILURE') {
+                                echo "❌ Pipeline status: FAILURE"
+                            } else {
+                                echo "✅ Pipeline status: SUCCESS / ALL TESTS PASSED"
+                            }
             }
         }
     }
