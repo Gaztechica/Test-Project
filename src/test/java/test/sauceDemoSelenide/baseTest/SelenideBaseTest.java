@@ -18,6 +18,11 @@ public class SelenideBaseTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-features=PasswordLeakDetection");
         Configuration.browserCapabilities = options;
+        Configuration.headless = true;
+
+        options.addArguments("--disable-gpu");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
     }
 
     @BeforeEach
@@ -26,7 +31,11 @@ public class SelenideBaseTest {
         options.addArguments("--disable-features=PasswordLeakDetection");
         Configuration.browserCapabilities = options;
         open(ConfigReader.get("saucedemo.url"));
+        Configuration.headless = true;
 
+        options.addArguments("--disable-gpu");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
         SauceDemoSteps steps = new SauceDemoSteps();
         steps.login(
                 ConfigReader.get("saucedemo.username"),
