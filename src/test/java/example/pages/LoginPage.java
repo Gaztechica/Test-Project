@@ -2,14 +2,22 @@ package example.pages;
 
 import com.codeborne.selenide.CheckResult;
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.WebElementCondition;
 import com.codeborne.selenide.Driver;
+import org.openqa.selenium.WebElement;
+
+import java.time.LocalDateTime;
+
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import org.openqa.selenium.WebElement;
+
 import test.herokuTables.SecureAreaPage;
+
 
 import java.time.Duration;
 
+import static com.codeborne.selenide.CheckResult.Verdict.ACCEPT;
+import static com.codeborne.selenide.CheckResult.Verdict.REJECT;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
@@ -60,16 +68,26 @@ public class LoginPage {
     /**
      * 3. Кастомное условие (Condition) для проверки цвета
      */
-    public static Condition textColorIs(String expectedRgbColor) {
-        return new Condition("textColorIs") {
+    public static WebElementCondition textColorIs(String expectedRgbColor) {
+        return new WebElementCondition("textColorIs") {
             @Override
             public CheckResult check(Driver driver, WebElement element) {
+                // 1. Проверяем отображение элемента
                 if (!element.isDisplayed()) {
-                    return CheckResult.rejected("Элемент еще не отображается", element.getAttribute("outerHTML"));
+                    return new CheckResult(REJECT, "Элемент еще не отображается", element.getAttribute("outerHTML"), LocalDateTime.now());
                 }
+
+                // 2. Получаем реальный цвет текста
                 String actualColor = element.getCssValue("color");
                 boolean met = actualColor.equalsIgnoreCase(expectedRgbColor);
-                return new CheckResult(met, String.format("Ожидался цвет: %s, но был: %s", expectedRgbColor, actualColor));
+
+                // 3. Возвращаем Record-объект CheckResult согласно сигнатуре Selenide 7+
+                if (met) {
+                    return new CheckResult(ACCEPT, null, actualColor, LocalDateTime.now());
+                } else {
+                    String errorMsg = String.format("Ожидался цвет: %s, но был: %s", expectedRgbColor, actualColor);
+                    return new CheckResult(REJECT, errorMsg, actualColor, LocalDateTime.now());
+                }
             }
         };
     }
