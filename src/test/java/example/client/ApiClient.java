@@ -1,33 +1,41 @@
 package example.client;
 
-import example.tests.api.models.AuthRequest;
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import io.restassured.config.RestAssuredConfig;
+import io.restassured.config.SSLConfig;
+import io.qameta.allure.restassured.AllureRestAssured;
 
 public class ApiClient {
 
     private final RequestSpecification requestSpec;
 
-    public ApiClient() {
-        this.requestSpec = new io.restassured.builder.RequestSpecBuilder()
-                .setBaseUri("https://reqres.in")
-                .setContentType(io.restassured.http.ContentType.JSON)
-                .setConfig(io.restassured.config.RestAssuredConfig.config()
-                        .sslConfig(io.restassured.config.SSLConfig.sslConfig()
-                                .relaxedHTTPSValidation()
-                                .allowAllHostnames()))
-                .addFilter(new io.qameta.allure.restassured.AllureRestAssured())
-                .build();
-    }
+        public ApiClient() {
+            RestAssuredConfig sslConfig = RestAssuredConfig.config()
+                    .sslConfig(SSLConfig.sslConfig()
+                            .relaxedHTTPSValidation()
+                            .allowAllHostnames());
 
-    public Response sendAuthRequest(String endpoint, AuthRequest authBody) {
-        return RestAssured.given()
-                .config(io.restassured.config.RestAssuredConfig.config()
-                        .sslConfig(io.restassured.config.SSLConfig.sslConfig().relaxedHTTPSValidation()))
-                .contentType(io.restassured.http.ContentType.JSON)
-                .body(authBody)
-                .when()
-                .post(endpoint);
+            this.requestSpec = new RequestSpecBuilder()
+                    .setBaseUri("https://restful-booker.herokuapp.com")
+                    .setContentType(ContentType.JSON)
+                    .addHeader("Host", "restful-booker.herokuapp.com")
+                    .setConfig(sslConfig)
+                    .addFilter(new AllureRestAssured())
+                    .build();
+        }
+
+        /**
+         * Универсальный метод отправки запроса на авторизацию
+         */
+        public Response sendAuthRequest(String endpoint, Object authBody) {
+            return RestAssured.given()
+                    .spec(requestSpec)
+                    .body(authBody)
+                    .when()
+                    .post(endpoint);
+        }
     }
-}

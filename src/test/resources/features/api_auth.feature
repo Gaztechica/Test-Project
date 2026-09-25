@@ -6,7 +6,7 @@ Feature: API аутентификации эндпоинта /auth
     Given API сервис аутентификации запущен и доступен
     When Отправляется POST запрос на "/auth" с логином "<username>" и паролем "<password>"
     Then Сервер возвращает код ответа <expectedStatusCode>
-    And Ответ соответствует JSON схеме "response_token.json"
+    And Ответ соответствует JSON схеме "response-token.json"
 
     Examples:
 
