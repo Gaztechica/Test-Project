@@ -37,7 +37,6 @@ public abstract class BaseTest {
         Configuration.browserCapabilities = options;
     }
 
-
     @AfterEach
     void tearDown() {
         Selenide.clearBrowserCookies();

@@ -13,7 +13,7 @@ import static io.restassured.RestAssured.given;
 
 public class BasesTest {
 
-    protected static String authToken;
+    public static String authToken;
 
     @BeforeEach
     public void globalSetup() {
