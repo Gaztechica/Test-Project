@@ -51,7 +51,6 @@ public class LoginPage {
 
     @Step("Проверить, что цвет сообщения об ошибке строго равен '{expectedRgbColor}'")
     public LoginPage verifyErrorColor(String expectedRgbColor) {
-        // Кастомное условие Selenide с защитой от недогрузившихся стилей
         flashMessage.should(textColorIs(expectedRgbColor), Duration.ofSeconds(10));
         return this;
     }
@@ -72,16 +71,13 @@ public class LoginPage {
         return new WebElementCondition("textColorIs") {
             @Override
             public CheckResult check(Driver driver, WebElement element) {
-                // 1. Проверяем отображение элемента
                 if (!element.isDisplayed()) {
                     return new CheckResult(REJECT, "Элемент еще не отображается", element.getAttribute("outerHTML"), LocalDateTime.now());
                 }
 
-                // 2. Получаем реальный цвет текста
                 String actualColor = element.getCssValue("color");
                 boolean met = actualColor.equalsIgnoreCase(expectedRgbColor);
 
-                // 3. Возвращаем Record-объект CheckResult согласно сигнатуре Selenide 7+
                 if (met) {
                     return new CheckResult(ACCEPT, null, actualColor, LocalDateTime.now());
                 } else {

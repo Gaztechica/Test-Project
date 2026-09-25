@@ -173,6 +173,36 @@
             <version>1.5.3</version>
         </dependency>
 
+            <!-- Cucumber Java -->
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-java</artifactId>
+                <version>7.14.0</version>
+            </dependency>
+
+            <!-- Cucumber JUnit Platform Engine (для JUnit 5) -->
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-junit-platform-engine</artifactId>
+                <version>7.14.0</version>
+                <scope>test</scope>
+            </dependency>
+
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-engine</artifactId>
+            <version>1.10.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Allure Cucumber JVM Adapter -->
+            <dependency>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-cucumber7-jvm</artifactId>
+                <version>2.24.0</version>
+            </dependency>
+
+
         <!--        &lt;!&ndash; Testcontainers Core & Modules &ndash;&gt;-->
         <!--        <dependency>-->
         <!--            <groupId>org.testcontainers.BaseIntegrationTest</groupId>-->
