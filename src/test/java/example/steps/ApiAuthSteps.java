@@ -5,9 +5,11 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ApiAuthSteps {
 
@@ -22,16 +24,11 @@ public class ApiAuthSteps {
     @When("Отправляется POST запрос на {string} с логином {string} и паролем {string}")
     public void sendPostAuthRequest(String path, String login, String password) {
 
-        RestAssured.baseURI = "https://herokuapp.com";
+        Map<String, String> authBody = new HashMap<>();
+        authBody.put("username", login);
+        authBody.put("password", password);
 
-        this.response = RestAssured.given()
-                .header("Host", "://herokuapp.com")
-                .contentType(io.restassured.http.ContentType.JSON)
-                .body("{\"username\":\"" + login + "\", \"password\":\"" + password + "\"}")
-                .when()
-                .post(path)
-                .then()
-                .extract().response();
+        this.response = apiClient.sendAuthRequest(path, authBody);
     }
 
     @Then("Сервер возвращает код ответа {int}")
@@ -41,8 +38,9 @@ public class ApiAuthSteps {
     }
 
     @And("Ответ соответствует JSON схеме {string}")
-    public void validateResponseSchema(io.restassured.response.Response response, String schemaFileName) {
-        response.then()
-                .body(io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath(schemaFileName));
+    public void validateResponseSchema(String schemaFileName) {
+        this.response.then()
+                .body(io.restassured.module.jsv.JsonSchemaValidator
+                        .matchesJsonSchemaInClasspath(schemaFileName));
     }
 }
