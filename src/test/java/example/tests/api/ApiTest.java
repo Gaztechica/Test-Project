@@ -52,7 +52,7 @@ public class ApiTest extends BasesTest {
                 arguments("AUTH-009 | Username типа Integer", 12345, "password123", 200, "reason", "Bad credentials"),
                 arguments("AUTH-010 | Password типа Boolean", "admin", true, 200, "reason", "Bad credentials"),
                 arguments("AUTH-011 | Username и Password типа массива", "[admin]", "[password123]", 200, "reason", "Bad credentials"),
-                arguments("AUTH-012 | SQL-инъекций", "' OR '1'='1", "' OR '1'='1'", 200, "reason", "Bad credentials"),
+                arguments("AUTH-012 | SQL-инъекций", "' OR '1'='1", "' OR '1'='1", 200, "reason", "Bad credentials"),
                 arguments("AUTH-013 | XSS-инъекция в логине", "<script>alert(1)</script>", "' OR '1'='1", 200, "reason", "Bad credentials"),
                 arguments("AUTH-014 | Неверный регистр логина", "ADMIN", "password123", 200, "reason", "Bad credentials"));
 //                arguments("AUTH-015 | Пропущено поле password", "admin", 200, "reason", "Bad credentials"));
