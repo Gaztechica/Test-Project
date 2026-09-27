@@ -2,8 +2,9 @@
 # FROM maven:3.9.6-eclipse-temurin-17-alpine
 
 # 1. Используем официальный образ Maven с JDK 17 через зеркало Яндекса
-FROM dockerhub.timeweb.cloud/library/maven:3.8.8-eclipse-temurin-17 AS build
+# FROM dockerhub.timeweb.cloud/library/maven:3.8.8-eclipse-temurin-17 AS build
 
+FROM maven:3.8.4-openjdk-17-slim
 # Шаг 2: Устанавливаем рабочую директорию внутри контейнера
 WORKDIR /app
 

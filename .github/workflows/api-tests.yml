@@ -1,10 +1,9 @@
 name: API Automation Tests
 
-# Триггеры запуска
 on:
   push:
     branches: [ main, master ]
-  #  СТРОКА РУЧНОГО ЗАПУСКА В ИНТЕРФЕЙСЕ
+
   workflow_dispatch:
 
 jobs:

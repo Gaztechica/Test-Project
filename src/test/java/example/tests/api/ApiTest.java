@@ -1,5 +1,6 @@
 package example.tests.api;
 
+import io.qameta.allure.*;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,10 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class ApiTest extends BasesTest {
 
+    @Epic("API: Аутентификации")
+    @Feature("Проверка аутентификации")
+    @Story("Параметризованный тест эндпоинта аутентификации")
+    @Severity(SeverityLevel.CRITICAL)
     @ParameterizedTest(name = "{0}")
     @MethodSource("authMatrixProvider")
     @DisplayName("Параметризованный тест эндпоинта аутентификации")
@@ -26,21 +31,30 @@ public class ApiTest extends BasesTest {
         payload.put("username", username);
         payload.put("password", password);
 
-        given()
-                .contentType(ContentType.JSON)
-                .body(payload)
-                .when()
-                .post("/auth")
-                .then()
-                .statusCode(expectedStatusCode)
-                .body(matchesJsonSchemaInClasspath("response-token.json"));
+        String requestBody = payload.toString();
+        Allure.addAttachment("Тело запроса (Request Body)", "application/json", requestBody);
+
+        Allure.step("Отправка POST-запроса на /auth и валидация ответа", () -> {
+            String responseBody = given()
+                    .contentType(ContentType.JSON)
+                    .body(payload)
+                    .when()
+                    .post("/auth")
+                    .then()
+                    .statusCode(expectedStatusCode)
+                    .body(matchesJsonSchemaInClasspath("response-token.json"))
+                    .extract()
+                    .asString();
+
+            Allure.addAttachment("Тело ответа (Response Body)", "application/json", responseBody);
+        });
     }
 
     private static Stream<Arguments> authMatrixProvider() {
         return Stream.of(
                 // 1. Эквивалентное разбиение
                 arguments("AUTH-001 | Валидные креды", "admin", "password123", 200),
-                arguments("AUTH-002 | Невалидный логин", "wrong_admin", "password123", 200),
+                arguments("AUTH-002 | Невалидный логин", "wrong_admin", "password123", 400),
                 arguments("AUTH-003 | Невалидный пароль", "admin", "wrong_pass", 200),
                 // 3. Граничные значения
                 arguments("AUTH-004 | Пустой username", "", "password123", 200),
@@ -59,6 +73,8 @@ public class ApiTest extends BasesTest {
     }
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Проверка валидации при Неверный HTTP-метод GET")
     @DisplayName("AUTH-016 Проверка  Неверный HTTP-метод GET")
     public void testInvalidMethodGet() {
 
