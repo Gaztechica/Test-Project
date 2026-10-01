@@ -31,7 +31,6 @@ public abstract class BaseIntegrationTest {
             .withExposedPorts(9092);
 
     protected static String getKafkaBootstrapServers() {
-        // Redpanda прокидывает OUTSIDE (9092) порт наружу на случайный свободный порт хоста
         return "localhost:" + redpanda.getMappedPort(9092);
     }
 

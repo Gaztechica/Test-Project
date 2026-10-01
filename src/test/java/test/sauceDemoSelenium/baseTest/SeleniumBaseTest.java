@@ -9,7 +9,7 @@ public class SeleniumBaseTest {
 
     public static WebDriver driver;
 
-    // 1. Общий метод инициализации (теперь вызывается и в Hooks, и в JUnit)
+    //  вызывается и в Hooks, и в JUnit)
     public static void initDriver() {
         if (driver == null) {
             driver = new ChromeDriver();
@@ -17,7 +17,7 @@ public class SeleniumBaseTest {
         }
     }
 
-    // 2. Общий метод закрытия (теперь вызывается и в Hooks, и в JUnit)
+    //  вызывается и в Hooks, и в JUnit)
     public static void quitDriver() {
         if (driver != null) {
             driver.quit();

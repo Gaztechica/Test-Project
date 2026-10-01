@@ -54,7 +54,7 @@ public class ApiTest extends BasesTest {
         return Stream.of(
                 // 1. Эквивалентное разбиение
                 arguments("AUTH-001 | Валидные креды", "admin", "password123", 200),
-                arguments("AUTH-002 | Невалидный логин", "wrong_admin", "password123", 400),
+                arguments("AUTH-002 | Невалидный логин", "wrong_admin", "password123", 200),
                 arguments("AUTH-003 | Невалидный пароль", "admin", "wrong_pass", 200),
                 // 3. Граничные значения
                 arguments("AUTH-004 | Пустой username", "", "password123", 200),

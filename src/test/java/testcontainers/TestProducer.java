@@ -17,14 +17,12 @@ public class TestProducer {
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        // Гарантируем доставку для теста
         props.put(ProducerConfig.ACKS_CONFIG, "all");
 
         this.producer = new KafkaProducer<>(props);
     }
 
     public void sendEvent(String orderId, String jsonPayload) {
-        // В качестве ключа Kafka используем orderId для обеспечения идемпотентности партиционирования
         ProducerRecord<String, String> record = new ProducerRecord<>(topic, orderId, jsonPayload);
         try {
             producer.send(record).get();

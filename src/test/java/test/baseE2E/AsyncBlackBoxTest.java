@@ -13,6 +13,7 @@
 //import java.time.Duration;
 //import java.util.UUID;
 //
+//
 ////@Slf4j
 //public class AsyncBlackBoxTest extends BaseE2ETest {
 //    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AsyncBlackBoxTest.class);
@@ -44,20 +45,18 @@
 //        String uniqueRequestId = UUID.randomUUID().toString();
 //        log.info("=== Старт позитивного E2E-теста для ID: {} ===", uniqueRequestId);
 //
-//        // Отправка HTTP-запроса через RestAssured
 //        RestAssured.given()
 //                .header("X-Request-Id", uniqueRequestId)
 //                .when()
 //                .post("/trigger")
 //                .then()
-//                .statusCode(200); // Ожидаем успешный код 20X от REST-слоя
+//                .statusCode(200);
 //
 //        log.info("HTTP статус 200 получен. Начинаем неблокирующее ожидание через Awaitility...");
 //
-//        // Использование конструкции Awaitility.await().atMost(...).until(...)
 //        Awaitility.await()
-//                .atMost(Duration.ofSeconds(3))       // Лимит ожидания (воркеру нужно 1.5с)
-//                .pollInterval(Duration.ofMillis(200)) // Частота неблокирующего опроса СУБД
+//                .atMost(Duration.ofSeconds(3))
+//                .pollInterval(Duration.ofMillis(200))
 //                .conditionEvaluationListener(condition ->
 //                        log.info("Проверка записи в БД. Найдено: {}. Прошло времени: {} мс",
 //                                condition.isSatisfied(), condition.getElapsedTimeInMS())
@@ -109,7 +108,7 @@
 //                .when()
 //                .post("/trigger")
 //                .then()
-//                .statusCode(400); // Проверка падения/прохождения на уровне RestAssured Response
+//                .statusCode(400);
 //
 //        log.info("=== Негативный тест валидации пройден: получен статус 400 ===");
 //    }

@@ -48,7 +48,6 @@ public class TestConsumer {
 
             for (ConsumerRecord<String, String> record : records) {
                 String orderId = record.key();
-                // В реальной жизни здесь бы парсился JSON: {"orderId": "123", "status": "PAID"}
                 String status = "PAID";
 
                 pstmt.setString(1, orderId);
