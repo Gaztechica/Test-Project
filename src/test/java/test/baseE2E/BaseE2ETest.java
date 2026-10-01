@@ -47,13 +47,10 @@ public abstract class BaseE2ETest {
 
         // Поднимаем HTTP-сервер на случайном свободном порту
         server = HttpServer.create(new InetSocketAddress(0), 0);
-
-        // Регистрируем эмулятор "черного ящика" AsyncBlackBox
         server.createContext("/trigger", new AsyncBlackBoxHandler());
         server.setExecutor(Executors.newFixedThreadPool(4));
         server.start();
 
-        // Настраиваем порт по умолчанию для RestAssured
         RestAssured.port = server.getAddress().getPort();
         log.info("Инфраструктура готова. HTTP сервер запущен на порту: {}", RestAssured.port);
     }
@@ -83,7 +80,6 @@ public abstract class BaseE2ETest {
                 return;
             }
 
-            // Имитация мгновенного ответа от REST-контроллера (HTTP 20X)
             exchange.sendResponseHeaders(200, -1);
             exchange.close();
 
